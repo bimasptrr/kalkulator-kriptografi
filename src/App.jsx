@@ -88,21 +88,21 @@ function App() {
       case 'playfair':
         return (
           <div className="matrix-container">
-            <label style={{ color: '#d4af37', fontWeight: 600, marginBottom: '0.5rem' }}>Matriks Playfair (5x5)</label>
+            <label className="matrix-label">Matriks Playfair (5x5)</label>
             <div className="matrix-grid grid-5x5">
               {playfairMatrix.map((char, i) => (
                 <input key={i} type="text" maxLength="1" className="matrix-input" value={char} onChange={(e) => handlePlayfairChange(i, e.target.value)} />
               ))}
             </div>
-            <small style={{ marginTop: '0.8rem', color: '#888' }}>* Huruf I dan J biasanya disatukan.</small>
+            <small className="matrix-note">* Huruf I dan J biasanya disatukan.</small>
           </div>
         );
       case 'hill':
         return (
           <div className="matrix-container">
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
-              <label style={{ color: '#d4af37', fontWeight: 600, margin: 0 }}>Ordo Matriks:</label>
-              <select className="form-control" style={{ width: 'auto', padding: '0.4rem 1rem' }} value={hillSize} onChange={(e) => setHillSize(Number(e.target.value))}>
+            <div className="hill-size-selector">
+              <label className="matrix-label">Ordo Matriks:</label>
+              <select className="form-control select-auto" value={hillSize} onChange={(e) => setHillSize(Number(e.target.value))}>
                 <option value={2}>2 x 2</option>
                 <option value={3}>3 x 3</option>
               </select>
@@ -117,7 +117,7 @@ function App() {
       case 'enigma':
         return (
           <div className="matrix-container">
-            <label style={{ color: '#d4af37', fontWeight: 600, marginBottom: '1rem' }}>Pengaturan Rotor (Kiri ke Kanan)</label>
+            <label className="matrix-label">Pengaturan Rotor (Kiri ke Kanan)</label>
             <div className="enigma-wrapper">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="rotor-module">
@@ -144,9 +144,9 @@ function App() {
           <h1 className="title">Crypto Calculator</h1>
 
           {/* Area Algoritma Utama */}
-          <div className="form-group">
+          <div className="form-group select-algorithm">
             <label>Pilih Algoritma Kriptografi</label>
-            <select className="form-control" value={cipherType} onChange={(e) => { setCipherType(e.target.value); setOutputText(''); }} style={{ fontWeight: 600 }}>
+            <select className="form-control algorithm-select" value={cipherType} onChange={(e) => { setCipherType(e.target.value); setOutputText(''); }}>
               <option value="vigenere">Vigenere Cipher</option>
               <option value="affine">Affine Cipher</option>
               <option value="playfair">Playfair Cipher</option>
@@ -162,14 +162,14 @@ function App() {
 
           {/* Sistem Toggle Mode */}
           <div className="mode-toggle">
-            <button 
-              className={`mode-btn ${operationMode === 'encrypt' ? 'active' : ''}`} 
+            <button
+              className={`mode-btn ${operationMode === 'encrypt' ? 'active' : ''}`}
               onClick={() => { setOperationMode('encrypt'); setInputText(''); setOutputText(''); }}
             >
               Mode Enkripsi
             </button>
-            <button 
-              className={`mode-btn ${operationMode === 'decrypt' ? 'active' : ''}`} 
+            <button
+              className={`mode-btn ${operationMode === 'decrypt' ? 'active' : ''}`}
               onClick={() => { setOperationMode('decrypt'); setInputText(''); setOutputText(''); }}
             >
               Mode Dekripsi
@@ -183,23 +183,23 @@ function App() {
                 {/* Judul Input berubah dinamis berdasarkan mode yang dipilih */}
                 {operationMode === 'encrypt' ? 'Plaintext (Input Pesan Asli)' : 'Ciphertext (Input Pesan Sandi)'}
               </label>
-              <textarea 
-                className="form-control" 
+              <textarea
+                className="form-control"
                 placeholder={operationMode === 'encrypt' ? "Ketik plaintext di sini..." : "Ketik ciphertext di sini..."}
-                value={inputText} 
+                value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
               ></textarea>
             </div>
-            
+
             <div className="form-group">
               <label>
                 {/* Judul Output berubah dinamis berdasarkan mode yang dipilih */}
                 {operationMode === 'encrypt' ? 'Ciphertext (Hasil Enkripsi)' : 'Plaintext (Hasil Dekripsi)'}
               </label>
-              <textarea 
-                className="form-control output-textarea" 
-                readOnly 
-                placeholder="Hasil operasi akan muncul di sini..." 
+              <textarea
+                className="form-control output-textarea"
+                readOnly
+                placeholder="Hasil operasi akan muncul di sini..."
                 value={outputText}
               ></textarea>
             </div>
